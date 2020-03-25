@@ -14,17 +14,11 @@ print(file_contents)
 
 df_string = file_contents.applymap(str)
 
-
-
-
-### ENCODING AUTOMATICALLY FIXED ------- THIS NEEDS WORKED ON
+### ENCODING AUTOMATICALLY FIXED
 #for m in range(len(file_contents)):
 headers = list(df_string.columns.values)
-for m in range(len(df_string)):
-    for n in range(m):
-        s = (fix_encoding(df_string.values[m][n]))
-        #print(s)
-        df_string.set_value(m,n,s)
+
+df_string.applymap(lambda text: fix_encoding(text))
 
 print(df_string)
 
@@ -47,8 +41,4 @@ print(headers)
 
 
 #df_string.to_csv(r'C:\Users\steph\Desktop\tryme.txt', header=None, index=None, sep=',', mode='a')
-## INSERT YOUR OWN PATH TO SEND TO ABOVE
-
-
-
-### NLP step ---- AFTER THE ABOVE IS FIXED THIS IS NEXT STEP
+### NLP
