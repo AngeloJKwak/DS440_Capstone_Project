@@ -16,10 +16,13 @@ df_string = file_contents.applymap(str)
 
 ### ENCODING AUTOMATICALLY FIXED
 # Below will fix the encoding of the TITLE and PAGENUM as unique non utf-8 characters would show up.
+# Later found out this is an issue in JOURNAL_NAME and COMMENT as well.
+
 
 df_string['TITLE'] = df_string['TITLE'].apply(lambda x: fix_encoding(x))
 df_string['PAGENUM'] = df_string['PAGENUM'].apply(lambda x: fix_encoding(x))
-
+df_string['JOURNAL_NAME'] = df_string['JOURNAL_NAME'].apply(lambda x: fix_encoding(x))
+df_string['COMMENT'] = df_string['COMMENT'].apply(lambda x: fix_encoding(x))
 
 ### Hold headers names
 headers = list(df_string.columns.values)
@@ -28,6 +31,8 @@ headers = list(df_string.columns.values)
 
 ## Below is script to recognize when the software has mixed up the first name with the last name. It simply compares the length of the two and if the last name shows to be shorter, it will flip the name values.
 # All test academic documents would use just a first initial as a first name. If this needs to be addressed further we can adjust as we need to.
+
+## try/except used to mitigate runtime error if there is a NaN value. In that case it would just pass.
 
 for i in range(len(df_string)):
     try:
@@ -77,4 +82,6 @@ for i in range(len(df_string)):
 
 
 
+
+# Save for Stephen to check output of DF.
 #df_string.to_csv(r'C:\Users\steph\Desktop\tryme2.txt', header=None, index=None, sep=',', mode='a')
